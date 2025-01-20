@@ -1,14 +1,56 @@
 
-# Command_and_Control_System
-This repository is designed as part of a military-grade system. It is self-sufficient, secure, and user-friendly.
-## Features
-- Event-driven architecture with Kafka and RabbitMQ
-- AI and ML integration with OpenCV, ONNX, and NVIDIA Triton
-- Offline support with auto-save and seamless synchronization
-- Advanced security measures: Zero Trust and Quantum-Safe Encryption
-- Fully compliant with ISO 27001, GDPR, and DARPA standards
-## Getting Started
-Follow the steps below to set up and use this system.
-1. Install dependencies using `requirements.txt`.
-2. Run the setup scripts in the `configurations` folder.
-3. Use `README.md` for detailed usage instructions.
+# Command Control System
+
+## Overview
+The Command Control System has been enhanced with new features to improve functionality and enable secure collaboration.
+
+### New Features
+1. **AI-Powered Command Analysis**
+    - Endpoint: `/analyze_command`
+    - Method: `POST`
+    - Description: Analyzes the sentiment of provided commands for prioritization.
+    - Example Request:
+      ```json
+      {
+          "command": "Deploy resources to location X immediately."
+      }
+      ```
+    - Example Response:
+      ```json
+      {
+          "analysis": [{"label": "POSITIVE", "score": 0.98}]
+      }
+      ```
+
+2. **Real-Time Command Updates**
+    - Enables real-time command communication and updates using Flask-SocketIO.
+
+3. **Geospatial Monitoring**
+    - Endpoint: `/geospatial_event`
+    - Method: `POST`
+    - Description: Reports and visualizes geospatial events.
+    - Example Request:
+      ```json
+      {
+          "latitude": 34.05,
+          "longitude": -118.25,
+          "event_type": "Deployment"
+      }
+      ```
+    - Example Response:
+      ```json
+      {
+          "message": "Geospatial event reported successfully",
+          "event": {...}
+      }
+      ```
+
+### Getting Started
+1. Install dependencies from `requirements.txt`:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2. Run the application:
+    ```bash
+    python app.py
+    ```

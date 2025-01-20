@@ -1,39 +1,27 @@
 
-import pytest
-from flask import Flask
+import unittest
 from app import app
 
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
+class CommandControlTests(unittest.TestCase):
+    def setUp(self):
+        self.app = app.test_client()
+        self.app.testing = True
 
-# Test the home route
-def test_home(client):
-    response = client.get('/')
-    assert response.status_code == 200
-    assert b'Command and Control System is fully functional.' in response.data
+    def test_home(self):
+        response = self.app.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Command and Control System", response.get_json()["message"])
 
-# Test the encryption route
-def test_encrypt(client):
-    data = {"data": "Test message"}
-    response = client.post('/encrypt', json=data)
-    assert response.status_code == 200
-    assert "encrypted_data" in response.get_json()
+    def test_analyze_command(self):
+        response = self.app.post('/analyze_command', json={"command": "Deploy resources immediately."})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("analysis", response.get_json())
 
-# Test the decryption route
-def test_decrypt(client):
-    data = {"data": "Test message"}
-    encrypt_response = client.post('/encrypt', json=data)
-    encrypted_data = encrypt_response.get_json()["encrypted_data"]
+    def test_geospatial_event(self):
+        event_data = {"latitude": 34.05, "longitude": -118.25, "event_type": "Deployment"}
+        response = self.app.post('/geospatial_event', json=event_data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("message", response.get_json())
 
-    decrypt_response = client.post('/decrypt', json={"encrypted_data": encrypted_data})
-    assert decrypt_response.status_code == 200
-    assert decrypt_response.get_json()["decrypted_data"] == "Test message"
-
-# Test the OSINT route
-def test_osint(client):
-    response = client.get('/osint')
-    assert response.status_code == 200
-    assert "source" in response.get_json()
-    assert "details" in response.get_json()
+if __name__ == '__main__':
+    unittest.main()
