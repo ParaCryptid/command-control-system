@@ -1,2 +1,11 @@
-# Example dependency list
-pytest==7.4.0
+flask
+flask_socketio
+opencv-python-headless  # cv2
+geojson
+onnxruntime
+pqcrypto
+prometheus_client
+psycopg2
+redis
+transformers
+pytest
