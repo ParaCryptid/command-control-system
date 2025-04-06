@@ -1,0 +1,1 @@
+# IPFS local pinning and CID log handler
