@@ -1,11 +1,10 @@
 flask
 flask_socketio
-opencv-python-headless  # cv2
-geojson
 onnxruntime
+opencv-python-headless
+geojson
 pqcrypto
 prometheus_client
 psycopg2
 redis
-transformers
 pytest
